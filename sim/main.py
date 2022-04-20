@@ -6,7 +6,8 @@ from sim.entities.missile.models import SimpleBalistic
 from sim.simulation import Simulation
 from sim.util.vector import Vector3
 
-N_MISSILES = 10
+N_MISSILES = 5
+
 def main():
 	target = Target(Vector3(1000, 1000, 0))
 	bal_missiles = []
@@ -18,7 +19,7 @@ def main():
 		target, *bal_missiles
 	])
 	simulation.run()
-	simulation.show()
+	simulation.save('output.gif')
 
 if __name__ == '__main__':
 	main()

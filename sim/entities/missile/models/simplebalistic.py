@@ -7,6 +7,7 @@ from scipy import optimize
 from scipy.optimize import fsolve
 
 from sim.entities.missile import Missile
+from sim.simulation import Simulation
 from sim.util import G
 from sim.util.vector import Vector3
 
@@ -47,9 +48,12 @@ class SimpleBalistic(Missile):
 		self.burn_acc = burn_acc
 		
 		self.lifetime = 0.
-		
-		self.bearing = self.compute_bearing()
 	
+	def create(self, sim:Simulation):
+		super().create(sim)
+
+		self.bearing = self.compute_bearing()
+
 	def est_displacement(self, thrust:Vector3, midcourse_time:float):
 		'''
 		Estimates the displacement after the thrust is vectored in the given 
