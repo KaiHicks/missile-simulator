@@ -1,7 +1,7 @@
 # Missile Simulator
 
 <p align="center">
-	<img src="https://raw.githubusercontent.com/KaiHicks/missile-simulator/2ee86bc16008d15e50d58dd2a9fffcfa92e88ad5/output.gif" width=50%>
+	<img src="https://github.com/KaiHicks/missile-simulator/blob/master/readme_animation.gif?raw=true" width=50%>
 </p>
 
 This program is a playground for simple missile simulations. Currently, only a balistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptor missiles. 
@@ -12,23 +12,23 @@ You can install dependancies either with pipenv (preferred) or with venv. Requir
 ### Pipenv
 
 First, install dependencies with
-`python3 -m pipenv install`
+```python3 -m pipenv install```
 Next, enter the virtual environment
-`python3 -m pipenv shell`
+```python3 -m pipenv shell```
 
 ### Venv/pip
 
 Create a virtual environment
-`python3 -m venv env`
+```python3 -m venv env```
 Enter the virtual environment (may be different if not using bash)
-`source env/bin/activate`
+```source env/bin/activate```
 Then, install dependencies
-`python3 -m pip install -r requirements.txt`
+```python3 -m pip install -r requirements.txt```
 
 ## Using the Simulator
 
 To run the simulator, do
-`python3 -m sim.main`
+```python3 -m sim.main```
 
 A basic simulation includes a missile and a target. First import all necessary components
 ```
