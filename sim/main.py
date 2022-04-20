@@ -12,7 +12,7 @@ def main():
 		target, bal_missile
 	])
 	simulation.run()
-	simulation.show()
+	simulation.save('output.gif')
 
 if __name__ == '__main__':
 	main()

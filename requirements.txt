@@ -1,0 +1,15 @@
+-i https://pypi.org/simple
+celluloid==0.2.0
+cycler==0.11.0
+ffmpeg==1.4
+fonttools==4.32.0
+kiwisolver==1.4.2
+matplotlib==3.5.1
+numpy==1.22.3
+packaging==21.3
+pillow==9.1.0
+pyparsing==3.0.8
+python-dateutil==2.8.2
+scipy==1.8.0
+six==1.16.0
+tqdm==4.64.0
