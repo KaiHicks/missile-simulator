@@ -89,7 +89,7 @@ class SimpleBalistic(Missile):
 			bearing = to_bearing(theta, phi)
 			displacement = self.est_displacement(bearing, midcourse_time)
 			
-			return (displacement - self.target).flatten()
+			return (self.pos + displacement - self.target).flatten()
 		
 		x = fsolve(
 			cost,

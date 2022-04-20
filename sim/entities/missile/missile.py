@@ -73,4 +73,3 @@ class Missile(Entity, ABC):
 			*np.column_stack(self._tail),
 			color=self.tail_color
 		)
-		display.axis.text(*self.pos, f'{self.pos} meters')
