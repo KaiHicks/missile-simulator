@@ -1,8 +1,8 @@
 # Missile Simulator
 
-<!-- <p align="center">
-	<img src="">
-</p> -->
+<p align="center">
+	<img src="https://raw.githubusercontent.com/KaiHicks/missile-simulator/2ee86bc16008d15e50d58dd2a9fffcfa92e88ad5/output.gif" width=50%>
+</p>
 
 This program is a playground for simple missile simulations. Currently, only a balistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptor missiles. 
 
