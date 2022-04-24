@@ -42,7 +42,6 @@ class Simulation:
 		elif time > 0:
 			ticks = int(time*self._tps)
 		
-		print(self.entities)
 		# Main simulation loop
 		for tick in tqdm(range(ticks), desc='Running simulation'):
 			# tick the entities
