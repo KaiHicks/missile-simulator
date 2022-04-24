@@ -4,7 +4,7 @@
 	<img src="https://github.com/KaiHicks/missile-simulator/blob/master/readme_animation.gif?raw=true" width=50%>
 </p>
 
-This program is a playground for simple missile simulations. Currently, only a balistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptor missiles. 
+This program is a playground for simple missile simulations. Currently, only a ballistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptor missiles. 
 
 ## Setup
 You can install dependancies either with pipenv (preferred) or with venv. Requires python 3.10.x or greater. 
@@ -33,7 +33,7 @@ To run the simulator, do
 A basic simulation includes a missile and a target. First import all necessary components
 ```
 from sim.entities import Target
-from sim.entities.missile.models import SimpleBalistic
+from sim.entities.missile.models import SimpleBallistic
 from sim.simulation import Simulation
 from sim.util.vector import Vector3
 ```
@@ -41,9 +41,9 @@ Then, create a target. Here, `Vector3(1000, 1000, 0)` is the target's position. 
 ```
 target = Target(Vector3(1000, 1000, 0))
 ```
-Next, create a balistic missile with a burn time of three seconds, the initial position set to `Vector3(0, 0, 1)`, and the target entity's position as its target.
+Next, create a ballistic missile with a burn time of three seconds, the initial position set to `Vector3(0, 0, 1)`, and the target entity's position as its target.
 ```
-bal_missile = SimpleBalistic(Vector3(0, 0, 1), target.pos, 3)
+bal_missile = SimpleBallistic(Vector3(0, 0, 1), target.pos, 3)
 ```
 After creating all the entities, we can now create and run the simulation.
 ```
