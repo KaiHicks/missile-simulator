@@ -10,9 +10,13 @@ from sim.entities import Entity
 
 class Simulation:
 	display:Renderer
-	entity_queue:Iterable[Entity]
-	entity_removal_queue:Iterable[Entity]
+	
+	# You cannot modify an iterable (entities) while iterating over it (i.e. 
+	# during a tick), so, if you want to add/remove an entity mid-tick, you
+	# must add it to the add or remove queue
 	entities:Dict[int, Entity]
+	entity_add_queue:deque[Entity]
+	entity_removal_queue:deque[Entity]
 	
 	_last_update:float|None
 	_tps:Number
@@ -21,7 +25,7 @@ class Simulation:
 		self, entities:Iterable[Entity], tps:Number=120
 	):
 		self.display = Renderer(self.draw, 512)
-		self.entity_queue = entities
+		self.entity_add_queue = deque(entities)
 		self.entity_removal_queue = deque()
 		self.entities = {}
 		
@@ -53,14 +57,14 @@ class Simulation:
 			self.display.refresh(tick/self._tps)
 	
 	def add_entity(self, e:Entity):
-		self.entity_queue.append(e)
+		self.entity_add_queue.append(e)
 
 	def _flush_entity_queue(self):
-		# Add from the queue
-		for entity in self.entity_queue:
-			entity.create(self)
-			self.entities[id(entity)] = entity
-		self.entity_queue = []
+		# Add from the addition queue
+		while self.entity_add_queue:
+			e = self.entity_add_queue.popleft()
+			e.create(self)
+			self.entities[id(e)] = e
 		
 		# Remove from the removal queue
 		while self.entity_removal_queue:
