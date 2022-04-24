@@ -1,3 +1,4 @@
+from collections import deque
 from numbers import Number
 from typing import Dict, Iterable
 
@@ -10,6 +11,7 @@ from sim.entities import Entity
 class Simulation:
 	display:Renderer
 	entity_queue:Iterable[Entity]
+	entity_removal_queue:Iterable[Entity]
 	entities:Dict[int, Entity]
 	
 	_last_update:float|None
@@ -20,6 +22,7 @@ class Simulation:
 	):
 		self.display = Renderer(self.draw, 512)
 		self.entity_queue = entities
+		self.entity_removal_queue = deque()
 		self.entities = {}
 		
 		self._last_update = None
@@ -53,13 +56,19 @@ class Simulation:
 		self.entity_queue.append(e)
 
 	def _flush_entity_queue(self):
+		# Add from the queue
 		for entity in self.entity_queue:
 			entity.create(self)
 			self.entities[id(entity)] = entity
 		self.entity_queue = []
+		
+		# Remove from the removal queue
+		while self.entity_removal_queue:
+			e = self.entity_removal_queue.popleft()
+			self.entities.pop(id(e))
 
 	def remove_entity(self, e:Entity):
-		self.entities.popitem(id(e))
+		self.entity_removal_queue.append(e)
 
 	def show(self):
 		'''

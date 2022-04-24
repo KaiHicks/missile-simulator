@@ -18,3 +18,6 @@ class Explosion(Entity):
         self.size = self.max_size*self.age/self.max_age
 
         self.age += time_delta
+        
+        if self.age >= self.max_age:
+            self.remove()
