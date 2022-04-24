@@ -3,7 +3,7 @@ from sim.entities import Entity
 from sim.util.vector import Vector3
 
 class Explosion(Entity):
-    def __init__(self, pos:Vector3, size:Number=10, color:str='red', time=0.1):
+    def __init__(self, pos:Vector3, size:Number=30, color:str='red', time=0.5):
         self.pos = pos
         self.max_size = size
         self.color = color
@@ -14,7 +14,7 @@ class Explosion(Entity):
         self.size = 0.
     
     def tick(self, time_delta:Number, time:Number):
-        self.alpha = 0.1**(self.age/self.max_age)
+        self.alpha = (1/128)**(self.age/self.max_age)
         self.size = self.max_size*self.age/self.max_age
 
         self.age += time_delta
