@@ -74,4 +74,4 @@ A ballistic missile (modeled in `Ballistic`) applies a constant acceleration ove
 
 ### Ballistic Interception
 
-The `BallisticInterceptor` object is a ballistic missile that targets another ballistic missile, instead of a static target. Computing the thrust direction for the ballistic interceptor is, while technically more complicated, very similar to the regular ballistic missile. Instead of simply modeling the trajectory of the interceptor, we must model the interceptor and the target. Then, we again use a numerical solver to optimize the difference between the interceptor and target. 
+The `BallisticInterceptor` object is a ballistic missile that targets another ballistic missile, instead of a static target. Computing the thrust direction for the ballistic interceptor is, while technically more complicated, very similar to the regular ballistic missile. Instead of simply modeling the trajectory of the interceptor, we must model the interceptor and the target. Then, we again use a numerical solver to optimize the difference between the interceptor and target positions. 
