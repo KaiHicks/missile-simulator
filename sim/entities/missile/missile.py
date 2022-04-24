@@ -38,6 +38,7 @@ class Missile(Entity, ABC):
 		
 		self.destroyed = False
 		
+		self._gravity = True
 		self._acc = Vector3(0)
 		
 		self._tail = deque(maxlen=tail_len)
@@ -59,7 +60,8 @@ class Missile(Entity, ABC):
 			self.detonate()
 		if not self.destroyed:
 			# Apply gravity
-			self.apply_accel(Vector3(0, 0, -G))
+			if self._gravity:
+				self.apply_accel(Vector3(0, 0, -G))
 			
 			# Apply acceleration
 			self.pos += self.vel*delta_t + 1/2*self._acc*delta_t**2
