@@ -42,28 +42,6 @@ class SimpleBallistic(Ballistic):
 		self.bearing, self.midcourse_time = self.compute_bearing()
 		self._trajectory = self.est_trajectory()
 
-	def est_trajectory(self, n_pts=100):
-		trajectory = []
-		pts_per_s = n_pts/(self.burn_time + self.midcourse_time)
-		
-		for t in np.linspace(
-			0,
-			self.burn_time,
-			num=int(pts_per_s*self.burn_time)
-		):
-			pos, _ = self.predict_pos_vel(self.bearing, t)
-			trajectory.append(pos)
-		for t in np.linspace(
-			self.burn_time,
-			self.burn_time + self.midcourse_time,
-			num=int(pts_per_s*self.midcourse_time)
-		):
-			pos, _ = self.predict_pos_vel(self.bearing, t)
-			trajectory.append(pos)
-		
-		trajectory = np.vstack(trajectory)
-		return trajectory
-
 	def compute_bearing(self):
 		'''
 		Calculates the optimal bearing for the thrust in the boost phase to
@@ -99,12 +77,3 @@ class SimpleBallistic(Ballistic):
 		bearing = to_bearing(theta, phi)
 		
 		return bearing, midcourse_time
-	
-	def draw(self, display:Renderer, time:Number)->None:
-		super().draw(display, time)
-		display.axis.plot(
-			*np.column_stack(self._trajectory),
-			color=self.tail_color,
-			linestyle='--',
-			alpha=0.25
-		)

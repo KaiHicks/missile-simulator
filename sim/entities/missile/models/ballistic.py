@@ -1,7 +1,9 @@
 from numbers import Number
 from typing import Tuple
 
+import numpy as np
 from sim.entities.missile.missile import Missile
+from sim.render import Renderer
 from sim.simulation import Simulation
 from sim.util import G
 from sim.util.vector import Vector3
@@ -24,6 +26,17 @@ class Ballistic(Missile):
 		self.lifetime = 0.
 		self.launch_time = launch_time
 		self._gravity = False
+		
+		self._trajectory:np.ndarray|None = None
+	
+	def est_trajectory(self, n_pts:int=100):
+		trajectory = []
+		
+		for t in np.linspace(0, self.burn_time+self.midcourse_time, num=n_pts):
+			pos, _ = self.predict_pos_vel(self.bearing, t)
+			trajectory.append(pos)
+		
+		return np.vstack(trajectory)
 	
 	def launch(self)->None:
 		self.launch_time = self.lifetime
@@ -71,3 +84,14 @@ class Ballistic(Missile):
 		if self.launch_time <= self.lifetime \
 			<= self.launch_time + self.burn_time:
 			self.apply_accel(self.burn_acc*self.bearing)
+
+	def draw(self, display:Renderer, time:Number)->None:
+		super().draw(display, time)
+		
+		if self._trajectory is not None:
+			display.axis.plot(
+				*np.column_stack(self._trajectory),
+				color=self.tail_color,
+				linestyle='--',
+				alpha=0.25
+			)
