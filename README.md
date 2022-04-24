@@ -1,10 +1,10 @@
-# Missile Simulator
+# Missile Defense Simulator
 
 <p align="center">
 	<img src="https://github.com/KaiHicks/missile-simulator/blob/master/readme_animation.gif?raw=true" width=50%>
 </p>
 
-This program is a playground for simple missile simulations. Currently, only a ballistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptor missiles. 
+This program is a playground for simple defense missile simulations. Currently, only a ballistic missile and a kinematics simulator are implemented. Future plans include cruise missiles and many types of interceptors.
 
 ## Setup
 You can install dependancies either with pipenv (preferred) or with venv. Requires python 3.10.x or greater. 
@@ -56,4 +56,7 @@ After some processing, the simulation has run, but nothing has been displayed or
 ```
 simulation.save('output.gif')
 ```
-Saving the simulation can take a long time and may require you to install `ffmpeg` and/or `H.264` through your system's package manager. For this reason, it is always a good idea to prototype/debug using `show()` calls, and then saving once everything is working. 
+Saving the simulation can take a long time and may require you to install `ffmpeg` and/or `H.264` through your system's package manager. For this reason, it is always a good idea to prototype/debug using `show()` calls, and then saving once everything is working. Alternatively, if you meerly wish to watch the simulation, you can instead call 
+```
+simulation.show()
+```

@@ -1,12 +1,14 @@
 from enum import Enum, auto
 from math import isnan
 from numbers import Number
+from typing import List
 
 import numpy as np
 from scipy import optimize
 from scipy.optimize import fsolve
 
 from sim.entities.missile import Missile
+from sim.render import Renderer
 from sim.simulation import Simulation
 from sim.util import G
 from sim.util.vector import Vector3
@@ -32,6 +34,9 @@ class SimpleBallistic(Missile):
 	
 	lifetime:float
 	bearing:Vector3
+	midcourse_time:float
+	
+	_trajectory:List[Vector3]
 	
 	def __init__(
 		self, pos:Vector3, target:Vector3, burn_time:Number, 
@@ -52,7 +57,33 @@ class SimpleBallistic(Missile):
 	def create(self, sim:Simulation):
 		super().create(sim)
 
-		self.bearing = self.compute_bearing()
+		self.bearing, self.midcourse_time = self.compute_bearing()
+		self._trajectory = self.est_trajectory()
+
+	def est_trajectory(self, n_pts=100):
+		trajectory = []
+		pts_per_s = n_pts/(self.burn_time + self.midcourse_time)
+		
+		for t in np.linspace(
+			0,
+			self.burn_time,
+			num=int(pts_per_s*self.burn_time)
+		):
+			trajectory.append(
+				1/2*self.burn_acc*self.bearing*t**2
+				+1/2*Vector3(0, 0, -G)*t**2
+			)
+		for t in np.linspace(
+			0,
+			self.midcourse_time,
+			num=int(pts_per_s*self.midcourse_time)
+		):
+			trajectory.append(self.est_displacement(
+				self.bearing, t
+			))
+		
+		trajectory = np.vstack(trajectory)
+		return trajectory
 
 	def est_displacement(self, thrust:Vector3, midcourse_time:float):
 		'''
@@ -117,7 +148,7 @@ class SimpleBallistic(Missile):
 		f_x = cost(x)
 		print(f'Error: {(f_x.T @ f_x)**0.5:,.4f}m')
 		
-		return bearing
+		return bearing, midcourse_time
 	
 	def tick(self, delta_t:Number, time:Number)->None:
 		super().tick(delta_t, time)
@@ -126,3 +157,12 @@ class SimpleBallistic(Missile):
 		
 		if self.lifetime <= self.burn_time:
 			self.apply_accel(self.burn_acc*self.bearing)
+	
+	def draw(self, display:Renderer, time:Number)->None:
+		super().draw(display, time)
+		display.axis.plot(
+			*np.column_stack(self._trajectory + self.initial_pos),
+			color=self.tail_color,
+			linestyle='--',
+			alpha=0.25
+		)

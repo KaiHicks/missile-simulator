@@ -4,7 +4,7 @@ import numpy as np
 
 class Vector3(np.ndarray):
 	def __new__(
-		self, x:Number, y:Number=None, z:Number=None, dtype=np.float32
+		self, x:Number, y:Number=None, z:Number=None, dtype=np.float64
 	):
 		if y is None:
 			y = float(x)

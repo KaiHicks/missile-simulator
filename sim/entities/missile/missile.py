@@ -10,6 +10,7 @@ from sim.util import G, Vector3
 
 
 class Missile(Entity, ABC):
+	initial_pos:Vector3
 	vel:Vector3
 	mass:Number
 	
@@ -22,6 +23,7 @@ class Missile(Entity, ABC):
 		color:str='red', tail_color:str='orange', tail_len:int=150,
 		explosion_size:Number=10
 	):
+		self.initial_pos = pos.copy()
 		self.pos = pos
 		self.vel = vel
 		self.mass = mass
@@ -60,8 +62,8 @@ class Missile(Entity, ABC):
 			self.apply_accel(Vector3(0, 0, -G))
 			
 			# Apply acceleration
+			self.pos += self.vel*delta_t + 1/2*self._acc*delta_t**2
 			self.vel += self._acc*delta_t
-			self.pos += self.vel*delta_t
 			
 			# Reset acceleration
 			self._acc = Vector3(0)
