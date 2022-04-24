@@ -1,11 +1,11 @@
 from enum import Enum, auto
 from numbers import Number
+from typing import Tuple
 
 import numpy as np
 from scipy.optimize import fsolve
 
 from sim.entities.missile.models import Ballistic
-from sim.render import Renderer
 from sim.simulation import Simulation
 from sim.util import G
 from sim.util.vector import Vector3
@@ -42,7 +42,7 @@ class SimpleBallistic(Ballistic):
 		self.bearing, self.midcourse_time = self.compute_bearing()
 		self._trajectory = self.est_trajectory()
 
-	def compute_bearing(self):
+	def compute_bearing(self)->Tuple[Vector3, float]:
 		'''
 		Calculates the optimal bearing for the thrust in the boost phase to
 		hit the target. 

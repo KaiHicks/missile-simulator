@@ -2,7 +2,6 @@
 Shows a simulation of a number of ballistic missiles striking a target. 
 '''
 
-from mimetypes import init
 import numpy as np
 
 from sim.entities import Target
