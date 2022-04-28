@@ -34,6 +34,9 @@ class Ballistic(Missile):
 		
 		for t in np.linspace(0, self.burn_time+self.midcourse_time, num=n_pts):
 			pos, _ = self.predict_pos_vel(self.bearing, t)
+			if pos.z < 0:
+				break
+			
 			trajectory.append(pos)
 		
 		return np.vstack(trajectory)
